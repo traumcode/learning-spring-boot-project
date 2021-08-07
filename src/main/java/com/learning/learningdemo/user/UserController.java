@@ -17,11 +17,13 @@ public class UserController {
                 new User(1L,
                         "Silviu",
                         "silviu@gmail.com",
-                        Gender.MALE),
+                        Gender.MALE,
+                        "Lorer asmsan sfo am fidnnga sgk sgoa ksapgnpgifnfpgin apsgda psaidfp dasinfp saindfpasn"),
                 new User(2L,
                         "Alina",
                         "alina@gmail.com",
-                        Gender.FEMALE)
+                        Gender.FEMALE,
+                        "lnsfjnapnf fna  ouasb ofusd bf vn sdub dosu sdbuvosa bvosdbv subouo odubvo")
         );
     }
 }
