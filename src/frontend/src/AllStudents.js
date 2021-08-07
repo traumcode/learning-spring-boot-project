@@ -49,18 +49,27 @@ const checkStatus = response => {
 function FetchStudents() {
     const [userList, setUserList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const[collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(false);
+    const [currentUser, setCurrentUser] = useState("-");
 
     useEffect(() => {
         fetch("api/v2/users")
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 setUserList(data)
                 setIsLoading(false);
             });
     }, []);
+    
+    const renderUsers = users => {
+        if(users.length <= 0) {
+            return "No data available"
+        } else {
+            return <Table dataSource={userList} columns={columns}/>
+        }
+    }
+    
     if (isLoading) {
         return <p>Loading...</p>
 
@@ -83,7 +92,7 @@ function FetchStudents() {
                         </Menu.Item>
                         <SubMenu key="sub1" icon={<UserOutlined />} title="User">
                             {userList.map((user, index) => {
-                                return <Menu.Item key={index+1}>{user.name}</Menu.Item>
+                                return <Menu.Item onClick={()=>{setCurrentUser(user.name)}} key={index+1}>{user.name}</Menu.Item>
                             })}
                         </SubMenu>
                         <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
@@ -100,7 +109,8 @@ function FetchStudents() {
                     <Content style={{ margin: '0 16px' }}>
                         <Breadcrumb style={{ margin: '16px 0' }}>
                             <Breadcrumb.Item>User</Breadcrumb.Item>
-                            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+                            {currentUser != null ? <Breadcrumb.Item>{currentUser}</Breadcrumb.Item> : <p></p>}
+
                         </Breadcrumb>
                         <div className={classes.sitelayoutbackground} style={{ padding: 24, minHeight: 360 }}>
                             {userList.length <= 0 ? <h3>NO DATA..</h3> : <h3>Data available</h3>}
