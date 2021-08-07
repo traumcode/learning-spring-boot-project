@@ -1,20 +1,12 @@
 import fetch from 'unfetch';
-import {Layout, Menu, Breadcrumb, Table} from 'antd';
-import {
-    DesktopOutlined,
-    PieChartOutlined,
-    FileOutlined,
-    TeamOutlined,
-    UserOutlined,
-    PlayCircleOutlined,
-    LoadingOutlined
-} from '@ant-design/icons';
-import classes from './AllStudents.module.css';
 import React, {useState, useEffect} from "react";
-import * as Reactos from 'react';
+import {Layout, Menu, Breadcrumb, Table} from 'antd';
+import {PieChartOutlined, FileOutlined, TeamOutlined, UserOutlined} from '@ant-design/icons';
 import {Button} from 'antd';
+import classes from './AllStudents.module.css';
 import * as ReactDOM from "react-dom";
-// import "./ProgressBar.css"
+import {Complete} from "./SearchBar";
+import {Empty} from "antd";
 
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -64,7 +56,7 @@ function FetchStudents() {
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
-                setUserList(data)
+                // setUserList(data)
                 setIsLoading(false);
             });
     }, []);
@@ -86,14 +78,18 @@ function FetchStudents() {
     }
 
     const renderUsers = () => {
+        //
+        // if (userList.length <= 0) {
+        //     return <Empty/>;
 
-        if (userList.length <= 0) {
-            return "No data available"
-        }
         return <Table dataSource={userList}
                       columns={columns}
                       bordered
-                      title={() => <Button type="primary" danger>Add new user</Button>}
+                      title={() =>
+                          <div className={classes.container}>
+                              <Button type="primary" danger>Add new user</Button>
+                              <Complete></Complete>
+                          </div>}
                       pagination={{pageSize: 50}} scroll={{y: 240}}
 
         />
@@ -138,7 +134,7 @@ function FetchStudents() {
                     </Breadcrumb>
                     {currentUser === "-" ?
                         <div className={classes.sitelayoutbackground} style={{padding: 24, minHeight: 360}}>
-                            {userList.length <= 0 ? <h3>NO DATA..</h3> : renderUsers()}
+                            {userList.length <= 0 ? <Empty/> : renderUsers()}
                         </div> : userList.map((user) => {
                             if (currentUser === user.name) {
                                 return <div>
