@@ -1,5 +1,41 @@
 import fetch from 'unfetch';
+import { Layout, Menu, Breadcrumb, Table } from 'antd';
+import {
+    DesktopOutlined,
+    PieChartOutlined,
+    FileOutlined,
+    TeamOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
+import classes from './AllStudents.module.css';
 import {useState, useEffect} from "react";
+
+const { Header, Content, Footer, Sider } = Layout;
+const { SubMenu } = Menu;
+
+const columns = [
+    {
+        title: 'Id',
+        dataIndex: 'id',
+        key: 'id',
+    },
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+    },
+    {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+    },
+    {
+        title: 'Gender',
+        dataIndex: 'gender',
+        key: 'gender',
+    },
+];
+
 
 const checkStatus = response => {
     if (response.ok) {
@@ -13,6 +49,7 @@ const checkStatus = response => {
 function FetchStudents() {
     const [userList, setUserList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const[collapsed, setCollapsed] = useState(false);
 
     useEffect(() => {
         fetch("api/v2/users")
@@ -24,26 +61,55 @@ function FetchStudents() {
                 setIsLoading(false);
             });
     }, []);
-
     if (isLoading) {
         return <p>Loading...</p>
-    }
 
+    }
     if (userList.length <= 0) {
         return <div>
             <h3>SRY BUT NO USERS IN THE DATABASE</h3>
         </div>
     } else {
 
-        return <div>
-            {userList.map((user, index) => {
-                return <div key={index+1}>
-                    <h1>{index+1}. {user.name}</h1>
-                    <p>{user.email}</p>
-                    <p>{user.gender}</p>
-                </div>
-            })}
-        </div>
+        return (
+
+            <Layout style={{ minHeight: '100vh' }}>
+                <Sider collapsible collapsed={collapsed}
+                       onCollapse={setCollapsed}>
+                    <div className={classes.logo} />
+                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                        <Menu.Item key="1" icon={<PieChartOutlined />}>
+                            Home
+                        </Menu.Item>
+                        <SubMenu key="sub1" icon={<UserOutlined />} title="User">
+                            {userList.map((user, index) => {
+                                return <Menu.Item key={index+1}>{user.name}</Menu.Item>
+                            })}
+                        </SubMenu>
+                        <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
+                            <Menu.Item key="6">Team 1</Menu.Item>
+                            <Menu.Item key="8">Team 2</Menu.Item>
+                        </SubMenu>
+                        <Menu.Item key="9" icon={<FileOutlined />}>
+                            Files
+                        </Menu.Item>
+                    </Menu>
+                </Sider>
+                <Layout className={classes.sitelayout}>
+                    <Header className={classes.sitelayoutbackground} style={{ padding: 0 }} />
+                    <Content style={{ margin: '0 16px' }}>
+                        <Breadcrumb style={{ margin: '16px 0' }}>
+                            <Breadcrumb.Item>User</Breadcrumb.Item>
+                            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+                        </Breadcrumb>
+                        <div className={classes.sitelayoutbackground} style={{ padding: 24, minHeight: 360 }}>
+                            {userList.length <= 0 ? <h3>NO DATA..</h3> : <h3>Data available</h3>}
+                        </div>
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                </Layout>
+            </Layout>
+        )
     }
 }
 
