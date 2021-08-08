@@ -56,8 +56,10 @@ function FetchStudents() {
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
-                // setUserList(data)
-                setIsLoading(false);
+                setTimeout(function () {
+                    setUserList(data)
+                    setIsLoading(false);
+                }, 1000);
             });
     }, []);
 
@@ -78,9 +80,6 @@ function FetchStudents() {
     }
 
     const renderUsers = () => {
-        //
-        // if (userList.length <= 0) {
-        //     return <Empty/>;
 
         return <Table dataSource={userList}
                       columns={columns}
@@ -91,10 +90,10 @@ function FetchStudents() {
                               <Complete></Complete>
                           </div>}
                       pagination={{pageSize: 50}} scroll={{y: 240}}
+                      rowKey={(user) => user.id}
 
         />
     }
-
 
     return (
 
@@ -134,10 +133,10 @@ function FetchStudents() {
                     </Breadcrumb>
                     {currentUser === "-" ?
                         <div className={classes.sitelayoutbackground} style={{padding: 24, minHeight: 360}}>
-                            {userList.length <= 0 ? <Empty/> : renderUsers()}
+                            {userList.length <= 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/> : renderUsers()}
                         </div> : userList.map((user) => {
                             if (currentUser === user.name) {
-                                return <div>
+                                return <div key={user.id}>
                                     <h2>{user.name}</h2>
                                     <h4>{user.description}</h4>
                                 </div>
@@ -146,7 +145,7 @@ function FetchStudents() {
                     }
 
                 </Content>
-                <Footer style={{textAlign: 'center'}}>Ant Design ©2018 Created by Ant UED</Footer>
+                <Footer style={{textAlign: 'center'}}>Traumcode [112358] design ©2021 Created by Silviu Bocsa</Footer>
             </Layout>
         </Layout>
     )

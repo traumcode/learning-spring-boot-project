@@ -6,13 +6,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #dog{
+    backface-visibility: hidden;
     position: fixed;
     left: 50%;
-    top: 15rem;
-    right: 50%;
+    top: 50%;
+    height: 100%;
+    margin-left: 62px;
 }
 
 
