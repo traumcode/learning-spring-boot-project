@@ -14,5 +14,6 @@ public class User {
     private String name;
     private String email;
     private Gender gender;
+    private String description;
 }
 

@@ -1,14 +1,33 @@
 @import '~antd/dist/antd.css';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');
 
+
+#inDog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#dog{
+    backface-visibility: hidden;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    margin-left: 62px;
+}
+
+
+
 body {
-  margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
