@@ -24,8 +24,7 @@
 }
 
 .ldsroller {
-    width:800px;
-    height: 800px;
+    margin-right: 75px;
 }
 .ldsroller div {
     animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
@@ -104,4 +103,11 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+.loadingGen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

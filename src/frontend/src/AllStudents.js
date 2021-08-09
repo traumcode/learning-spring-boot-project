@@ -63,23 +63,35 @@ function FetchStudents() {
             });
     }, []);
 
-    if (isLoading) {
-        ReactDOM.render(<div className={classes.ldsroller}>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>, document.getElementById('dog'))
-
-    } else {
-        ReactDOM.render(<div></div>, document.getElementById('dog'))
-    }
+    // if (isLoading) {
+    //     ReactDOM.render(<div className={classes.ldsroller}>
+    //         <div></div>
+    //         <div></div>
+    //         <div></div>
+    //         <div></div>
+    //         <div></div>
+    //         <div></div>
+    //         <div></div>
+    //         <div></div>
+    //     </div>, document.getElementById('dog'))
+    //
+    // } else {
+    //     ReactDOM.render(<div></div>, document.getElementById('dog'))
+    // }
 
     const renderUsers = () => {
+        if (isLoading) {
+            return <div className={classes.ldsroller}>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        }
 
         return <Table dataSource={userList}
                       columns={columns}
@@ -133,7 +145,10 @@ function FetchStudents() {
                     </Breadcrumb>
                     {currentUser === "-" ?
                         <div className={classes.sitelayoutbackground} style={{padding: 24, minHeight: 360}}>
-                            {userList.length <= 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/> : renderUsers()}
+                            {userList.length <= 0 ? <div className={classes.loadingGen}>
+                                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
+                                {renderUsers()}
+                            </div> : renderUsers()}
                         </div> : userList.map((user) => {
                             if (currentUser === user.name) {
                                 return <div key={user.id}>

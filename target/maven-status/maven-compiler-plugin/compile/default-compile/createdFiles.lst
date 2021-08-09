@@ -1,0 +1,4 @@
+com\learning\learningdemo\LearningdemoApplication.class
+com\learning\learningdemo\user\User.class
+com\learning\learningdemo\user\UserController.class
+com\learning\learningdemo\user\Gender.class
